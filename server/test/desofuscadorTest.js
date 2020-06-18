@@ -7,8 +7,8 @@ const AmpersanTest = () => {
     let timeLabel = "AmpersanTest";
     console.time(timeLabel);
     let result = Desofuscador.decode(origem);
-console.timeEnd(timeLabel);
-    console.log((resultadoEsperado === result ? "\x1b[32m" : "\x1b[31m"), `\nResultado esperado: ${resultadoEsperado}\nResultado Obtido: ${result}`);
+    console.timeEnd(timeLabel);
+    console.log((resultadoEsperado === result ? "\x1b[32m" : "\x1b[31m"), `\nResultado esperado: ${resultadoEsperado}\n\nResultado Obtido: ${result}`);
     console.log('\x1b[0m', '');
     console.log("______________________________\n");
     
@@ -23,7 +23,7 @@ const PercentTest = () => {
     console.time(timeLabel);
     let result = Desofuscador.decode(origem);
     console.timeEnd(timeLabel);
-    console.log((resultadoEsperado === result ? "\x1b[32m" : "\x1b[31m"), `\nResultado esperado: ${resultadoEsperado}\nResultado Obtido: ${result}`);
+    console.log((resultadoEsperado === result ? "\x1b[32m" : "\x1b[31m"), `\nResultado esperado: ${resultadoEsperado}\n\nResultado Obtido: ${result}`);
     console.log('\x1b[0m', '');
     console.log("______________________________\n");
 
@@ -38,7 +38,7 @@ const charTest = () => {
     console.time(timeLabel);
     let result = Desofuscador.decode(origem);
     console.timeEnd(timeLabel);
-    console.log((resultadoEsperado === result ? "\x1b[32m" : "\x1b[31m"), `\nResultado esperado: ${resultadoEsperado}\nResultado Obtido: ${result}`);
+    console.log((resultadoEsperado === result ? "\x1b[32m" : "\x1b[31m"), `\nResultado esperado: ${resultadoEsperado}\n\nResultado Obtido: ${result}`);
     console.log('\x1b[0m', '');
     console.log("______________________________\n");
     
@@ -53,7 +53,7 @@ const misturadoTest = () => {
     console.time(timeLabel);
     let result = Desofuscador.decode(origem);
     console.timeEnd(timeLabel);
-    console.log((resultadoEsperado === result ? "\x1b[32m" : "\x1b[31m"), `\nResultado esperado: ${resultadoEsperado}\nResultado Obtido: ${result}`);
+    console.log((resultadoEsperado === result ? "\x1b[32m" : "\x1b[31m"), `\nResultado esperado: ${resultadoEsperado}\n\nResultado Obtido: ${result}`);
     console.log('\x1b[0m', '');
     console.log("______________________________\n");
 
@@ -61,19 +61,79 @@ const misturadoTest = () => {
 };
 
 const convertCast = () => {
-    let origem = "Este e o CaSt(  0X746578746f206f726967696e616c as CHAR ) que foi decodificado";
+    let origem = "   Este e o CaSt(  0X746578746f206f726967696e616c as CHAR ) que foi decodificado";
     let resultadoEsperado = "Este e o texto original que foi decodificado";
 
     let timeLabel = "convertCast";
     console.time(timeLabel);
     let result = Desofuscador.decode(origem);
     console.timeEnd(timeLabel);
-    console.log((resultadoEsperado === result ? "\x1b[32m" : "\x1b[31m"), `\nResultado esperado: ${resultadoEsperado}\nResultado Obtido: ${result}`);
+    console.log((resultadoEsperado === result ? "\x1b[32m" : "\x1b[31m"), `\nResultado esperado: ${resultadoEsperado}\n\nResultado Obtido: ${result}`);
     console.log('\x1b[0m', '');
     console.log("______________________________\n");
 
     return (resultadoEsperado === result);
 };
+
+const convertCast2 = () => {
+    let origem = "Este /**/ e o CaSt(  0X746578746f206f726967696e616c as CHAR ) que /**/foi decodificado";
+    let resultadoEsperado = "Este e o texto original que foi decodificado";
+
+    let timeLabel = "convertCast2";
+    console.time(timeLabel);
+    let result = Desofuscador.decode(origem);
+    console.timeEnd(timeLabel);
+    console.log((resultadoEsperado === result ? "\x1b[32m" : "\x1b[31m"), `\nResultado esperado: ${resultadoEsperado}\n\nResultado Obtido: ${result}`);
+    console.log('\x1b[0m', '');
+    console.log("______________________________\n");
+
+    return (resultadoEsperado === result);
+}
+
+const convertCast3 = () => {
+    let origem = "Este +e+o+CaSt(  0X746578746f206f726967696e616c as CHAR ) que foi+decodificado";
+    let resultadoEsperado = "Este e o texto original que foi decodificado";
+
+    let timeLabel = "convertCast3";
+    console.time(timeLabel);
+    let result = Desofuscador.decode(origem);
+    console.timeEnd(timeLabel);
+    console.log((resultadoEsperado === result ? "\x1b[32m" : "\x1b[31m"), `\nResultado esperado: ${resultadoEsperado}\n\nResultado Obtido: ${result}`);
+    console.log('\x1b[0m', '');
+    console.log("______________________________\n");
+
+    return (resultadoEsperado === result);
+}
+
+const convertCast4 = () => {
+    let origem = "Este+e+o/**/ CaSt(  0X746578746f206f726967696e616c as CHAR )+que+foi /**/decodificado";
+    let resultadoEsperado = "Este e o texto original que foi decodificado";
+
+    let timeLabel = "convertCast4";
+    console.time(timeLabel);
+    let result = Desofuscador.decode(origem);
+    console.timeEnd(timeLabel);
+    console.log((resultadoEsperado === result ? "\x1b[32m" : "\x1b[31m"), `\nResultado esperado: ${resultadoEsperado}\n\nResultado Obtido: ${result}`);
+    console.log('\x1b[0m', '');
+    console.log("______________________________\n");
+
+    return (resultadoEsperado === result);
+}
+
+const convertCast5 = () => {
+    let origem = "2018-05-30 18:08:45 177.191.150.231 get /fornecedores/licitacoes/licita/licita_c.asp gisup=po999999.9'+/**/union/**/all+/**/select+/**/cast(0x393133353134353632312e39+as+char),/**/cast(0x393133353134353632322e39+as+char),/**/cast(0x393133353134353632332e39+as+char),/**/cast(0x393133353134353632342e39+as+char),/**/cast(0x393133353134353632352e39+as+char),/**/cast(0x393133353134353632362e39+as+char),/**/cast(0x393133353134353632372e39+as+char),/**/cast(0x393133353134353632382e39+as+char),/**/cast(0x393133353134353632392e39+as+char)+and+'0'='0+|499|80040e14|[microsoft][odbc_sql_server_driver][sql_server]incorrect_syntax_near_the_keyword_'and'. 500 0 78 www5.caixa.gov.br mozilla/5.0+(windows;+u;+windows+nt+5.1;+pt-pt;+rv:1.9.1.2)+gecko/20090729+firefox/3.5.2+(.net+clr+3.5.30729)";
+    let resultadoEsperado = "2018-05-30 18:08:45 177.191.150.231 get /fornecedores/licitacoes/licita/licita_c.asp gisup=po999999.9' union all select 9135145621.9, 9135145622.9, 9135145623.9, 9135145624.9, 9135145625.9, 9135145626.9, 9135145627.9, 9135145628.9, 9135145629.9 and '0'='0 |499|80040e14|[microsoft][odbc_sql_server_driver][sql_server]incorrect_syntax_near_the_keyword_'and'. 500 0 78 www5.caixa.gov.br mozilla/5.0 windows nt rv:1.9.1.2) gecko/20090729 firefox/3.5.2 (.net clr 3.5.30729)";
+    
+    let timeLabel = "convertCast5";
+    console.time(timeLabel);
+    let result = Desofuscador.decode(origem);
+    console.timeEnd(timeLabel);
+    console.log((resultadoEsperado === result ? "\x1b[32m" : "\x1b[31m"), `\nResultado esperado: ${resultadoEsperado}\n\nResultado Obtido: ${result}`);
+    console.log('\x1b[0m', '');
+    console.log("______________________________\n");
+
+    return (resultadoEsperado === result);
+}
 
 const test = () => {
     let totalErros = 0;
@@ -87,6 +147,10 @@ const test = () => {
     charTest() ? totalAcertos++ : totalErros++;
     misturadoTest() ? totalAcertos++ : totalErros++;
     convertCast() ? totalAcertos++ : totalErros++;
+    convertCast2() ? totalAcertos++ : totalErros++;
+    convertCast3() ? totalAcertos++ : totalErros++;
+    convertCast4() ? totalAcertos++ : totalErros++;
+    convertCast5() ? totalAcertos++ : totalErros++;
     console.log('\x1b[34m', `Testes executados: ${totalErros + totalAcertos}`);
     console.log('\x1b[32m', `Acertos: ${totalAcertos}`);
     console.log('\x1b[31m', `Erros: ${totalErros}`);
