@@ -6,6 +6,7 @@ import NewUserPage from './components/user/NewUserPage';
 import LoginPage from './components/login/LoginPage';
 import UserList from './components/user/UserList';
 import Page from './components/Page';
+import FormDesofuscador from './components/desofuscador/FormDesofuscador';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route { ...rest} render={props => (
@@ -45,9 +46,7 @@ const Routes = () => (
 
             <PrivateRoute 
                 path="/app/" 
-                component={() => <Page body={
-                    <p style={{textAlign: "center"}}>(aqui ficará a funcionalidade de desofuscamento)</p>} />
-                } />
+                component={() => <Page body={<FormDesofuscador />} />} />
 
             <PrivateAdminRoute 
                 path="/admin/" 
