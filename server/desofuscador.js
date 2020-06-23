@@ -1,5 +1,10 @@
 const { HtmlEntitiesChar, HtmlEntitiesPer, HtmlEntitiesAmp, HexaChar } = require('./decodeList.json');
-
+/*
+ HtmlEntitiesChar: char(32)
+ HtmlEntitiesPer: %20
+ HtmlEntitiesAmp: &lt;
+ HexaChar: 20
+*/
 const Desofuscador = {
     /**
      * Está função é responsável por decodificar uma string
