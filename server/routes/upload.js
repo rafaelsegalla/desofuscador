@@ -3,6 +3,8 @@ const multer = require('multer');
 const fs = require('fs');
 const readline = require('readline');
 const {once} = require('events');
+const desofuscador = require('../desofuscador');
+
 
 const upload = multer({
     dest: 'upload_files/',
@@ -45,7 +47,7 @@ async function processFile(file) {
         input: fs.createReadStream(file.path)
     })
     readInterface.on('line', (line) =>{
-        writeStream.write(`${line.toUpperCase()}\n`);
+        writeStream.write(`${desofuscador.decode(line)}\n`);
     })
     readInterface.on('close', () => {
         writeStream.end();
