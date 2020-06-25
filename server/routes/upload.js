@@ -3,11 +3,10 @@ const multer = require('multer');
 const fs = require('fs');
 const readline = require('readline');
 
-// && !file.mimeType.includes('log')
 const upload = multer({
     dest: 'upload_files/',
     fileFilter: (req, file, cb) => {
-        if (file.mimeType !== 'text/plain') {
+        if (!file.originalname.match(/\.(txt|log)$/)) {
             return cb(new Error('Formato de arquivo inválido.'));
         }
         cb(null, true);
