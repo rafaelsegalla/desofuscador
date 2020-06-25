@@ -31,3 +31,5 @@ yarn-error.log*
 
 
 server/.env
+
+**/upload_files/

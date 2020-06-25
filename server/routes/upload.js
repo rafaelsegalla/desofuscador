@@ -3,7 +3,7 @@ const multer = require('multer');
 const fs = require('fs');
 const readline = require('readline');
 const {once} = require('events');
-const desofuscador = require('../desofuscador');
+const Desofuscador = require('../desofuscador');
 
 //verifica o formato de arquivo enviado
 const upload = multer({
@@ -20,18 +20,43 @@ const upload = multer({
 // de um arquivo com o mesmo nome do enviado
 router.post('/', (req, res) => {
     upload(req, res, async (err) =>{
+        let result = {
+            status: "",
+            filePath: "",
+            message: "",
+            txt: ""
+        }
+
+        let txt = req.body.desofusca_texto ? req.body.desofusca_texto : '';
+        if(txt !== "") {
+            result.status = 200;
+            result.message = "Desofuscamento concluido com sucesso!";
+            result.txt = Desofuscador.decode(txt);
+        } else {
+            result.status = 442;
+            result.message = "Nada informado";
+        }
+
         if (err) {
             console.log(err);
-            res.status(422).send();
+            result.status = 422;
+            result.message = "Formato invalido";
         } else {
-            let file = req.file;
-            const path = await processFile(file);
-            if (path) {
-                res.download(path,file.originalname);
-            } else {
-                res.status(500).send();
+            let file = req.file ? req.file : false;
+            if(file) {
+                const path = await processFile(file);
+                if (path) {
+                    result.status = 200;
+                    result.filePath = path;
+                    result.message = "Desofuscamento concluido com sucesso!";
+                } else {
+                    result.status = 500;
+                    result.message = "Ocorreu um erro ao encontrar o arquivo!";
+                }
             }
         }
+        console.log(result);
+        res.status(result.status).send(JSON.stringify(result));
     });
 });
 
@@ -51,7 +76,7 @@ async function processFile(file) {
         input: fs.createReadStream(file.path)
     })
     readInterface.on('line', (line) =>{
-        writeStream.write(`${desofuscador.decode(line)}\n`);
+        writeStream.write(`${Desofuscador.decode(line)}\n`);
     })
     readInterface.on('close', () => {
         writeStream.end();

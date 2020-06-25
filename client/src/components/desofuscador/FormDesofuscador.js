@@ -21,7 +21,7 @@ function FormDesofuscador() {
                         variant="h5">
                         Texto
                     </Typography>
-                    <TextareaAutosize rows="10" />
+                    <TextareaAutosize rows="10" name="desofusca_texto" id="desofusca_texto" />
                     
                     <Button color="primary" variant="contained" type="submit">
                         Enviar
