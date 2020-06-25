@@ -14,7 +14,7 @@ function FormDesofuscador() {
                         variant="h5">
                         Importar arquivo
                     </Typography>                    
-                    <Input type="file" name="arquivo" />
+                    <Input type="file" id="arquivo" name="arquivo"/>
 
                     <Typography
                         color="primary"
@@ -23,7 +23,7 @@ function FormDesofuscador() {
                     </Typography>
                     <TextareaAutosize rows="10" />
                     
-                    <Button color="primary" variant="contained">
+                    <Button color="primary" variant="contained" type="submit">
                         Enviar
                     </Button>
 
