@@ -2,6 +2,7 @@ const router = require('express').Router();
 const multer = require('multer');
 const fs = require('fs');
 const readline = require('readline');
+const {once} = require('events');
 
 const upload = multer({
     dest: 'upload_files/',
@@ -14,25 +15,45 @@ const upload = multer({
 }).single('arquivo');
 
 router.post('/', (req, res) => {
-    upload(req, res, (err) =>{
+    upload(req, res, async (err) =>{
         if (err) {
             console.log(err);
             res.status(422).send();
         } else {
             let file = req.file;
-            processFile(file);
-            res.send();
+            const path = await processFile(file);
+            if (path) {
+                res.download(path, file.originalname);
+            } else {
+                res.status(500).send();
+            }
         }
-    })
+    });
 });
 
-function processFile(file) {
+async function processFile(file) {
+    const outpath = `${process.env.OUTDIR}/${file.filename}`;
+    const writeStream = fs.createWriteStream(outpath, {
+        flags: 'a'
+    });
+    writeStream.on('error', (err) => {
+        consol.log(err);
+        throw err;
+    })
+
     const readInterface = readline.createInterface({
         input: fs.createReadStream(file.path)
     })
     readInterface.on('line', (line) =>{
-        console.log(line);
+        writeStream.write(`${line.toUpperCase()}\n`);
     })
+    readInterface.on('close', () => {
+        writeStream.end();
+    });
+
+    await once(writeStream, 'finish');
+
+    return outpath;
 }
 
 module.exports = router;
