@@ -5,7 +5,7 @@ const readline = require('readline');
 const {once} = require('events');
 const desofuscador = require('../desofuscador');
 
-
+//verifica o formato de arquivo enviado
 const upload = multer({
     dest: 'upload_files/',
     fileFilter: (req, file, cb) => {
@@ -16,6 +16,8 @@ const upload = multer({
     }
 }).single('arquivo');
 
+//se houver um erro o status é 442, senao o arquivo é processado e é feito o download
+// de um arquivo com o mesmo nome do enviado
 router.post('/', (req, res) => {
     upload(req, res, async (err) =>{
         if (err) {
@@ -25,7 +27,7 @@ router.post('/', (req, res) => {
             let file = req.file;
             const path = await processFile(file);
             if (path) {
-                res.download(path, file.originalname);
+                res.download(path,file.originalname);
             } else {
                 res.status(500).send();
             }
@@ -33,6 +35,8 @@ router.post('/', (req, res) => {
     });
 });
 
+//funcao processa o arquivo, lendo linha a linha,
+// chamando a função do desofuscador e escrevendo o arquivo de saída
 async function processFile(file) {
     const outpath = `${process.env.OUTDIR}/${file.filename}`;
     const writeStream = fs.createWriteStream(outpath, {

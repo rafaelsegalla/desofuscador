@@ -19,6 +19,7 @@ app.use(cors());
 app.use(`/user`, taskRouter);
 app.use(`/upload`, uploadRouter);
 
+//cria o diretorio OUTDIR se ele não existir
 fs.access(process.env.OUTDIR, fs.constants.F_OK, (err) => {
     if(err){
         fs.mkdir(process.env.OUTDIR, (err) => {
