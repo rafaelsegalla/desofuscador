@@ -33,9 +33,13 @@ const Desofuscador = {
         // Utilizado para identificar palavras reservadas no alfabeto
         let token = "";
         
-        // Substitui espaços extras, "+" e comentários por um único espaço
-        str = str.replace(/\s+|\+|\/\*.*?\*\//g, ' ').trim();
-        
+        // Substitui comentários por vazio
+        str = str.replace(/\/\*.*?\*\//g, '');
+        // Substitui "+" por espaço
+        str = str.replace(/\+/g, ' ');
+        // Substitui espaços extras por um único espaço
+        str = str.replace(/\s+/g, ' ');
+
         // Converte a string em um array
         let arrayString = str.split("");
     
@@ -80,8 +84,8 @@ const Desofuscador = {
             // A cada iteração, soma o caracter atual com a variavel token
             token += char = arrayString[i];
 
-            // Se o caracter for um espaço, significa que é um novo token
-            if(char === " ") {
+            // Se o caracter for um espaço ou uma virgula, significa que é um novo token
+            if(char === " " || char === ",") {
                 token = "";
             } // Se o caracter for um ampersan, significa que os proximos caracteres podem representar um token Ampersan
             else if (char === "&") {
@@ -138,10 +142,8 @@ const Desofuscador = {
                 }
             }
         }
-        // Por fim, remove os espaços desnecessários
-        let res = arrayString.join("").replace(/\s+/g, ' ').trim();
-
-        return res;
+        
+        return arrayString.join("").trim();
     },
 };
 
