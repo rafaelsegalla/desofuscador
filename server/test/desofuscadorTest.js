@@ -134,6 +134,19 @@ const convertCast5 = () => {
 
     return (resultadoEsperado === result);
 }
+const convertCast6 = () => {
+    let origem = "Materializa%20Produ%E7%C3%A3o%20e%20Qualidade%20(dia)";
+    
+    let timeLabel = "convertCast6";
+    console.time(timeLabel);
+    let result = Desofuscador.decode(origem);
+    console.timeEnd(timeLabel);
+    console.log("\x1b[32m", `\nResultado Obtido: ${result}`);
+    console.log('\x1b[0m', '');
+    console.log("______________________________\n");
+
+    return true;
+}
 
 const test = () => {
     let totalErros = 0;
@@ -151,6 +164,7 @@ const test = () => {
     convertCast3() ? totalAcertos++ : totalErros++;
     convertCast4() ? totalAcertos++ : totalErros++;
     convertCast5() ? totalAcertos++ : totalErros++;
+    convertCast6() ? totalAcertos++ : totalErros++;
     console.log('\x1b[34m', `Testes executados: ${totalErros + totalAcertos}`);
     console.log('\x1b[32m', `Acertos: ${totalAcertos}`);
     console.log('\x1b[31m', `Erros: ${totalErros}`);

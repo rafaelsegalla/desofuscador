@@ -104,7 +104,7 @@ const Desofuscador = {
                 token = '';
             } // Se o caracter for porcentagem, significa que os proximos caracteres podem representar um token Percent
             else if (char === "%") {
-                token = `${char}${arrayString[i+1]}${arrayString[i+2]}`;
+                token = `${char}${(arrayString[i+1]).toLowerCase()}${(arrayString[i+2]).toLowerCase()}`;
                 char = HtmlEntitiesPer[token] ? HtmlEntitiesPer[token] : '';
                 i += 2;
                 replaceTokenAt(i, token, char);
@@ -114,7 +114,7 @@ const Desofuscador = {
                 let closeParentesis = false;
                 for(var ii = (i+1); ii < arrayString.length; ii++) {
                     let s = arrayString[ii];
-                    token += s;
+                    token += s.toLowerCase();
                     if(s === ")") {
                         closeParentesis = true;
                         break;
