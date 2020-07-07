@@ -26,11 +26,10 @@ router.post('/', (req, res) => {
             message: "",
             txt: ""
         }
-
         let txt = req.body.desofusca_texto ? req.body.desofusca_texto : '';
         if(txt !== "") {
             result.status = 200;
-            result.message = "Desofuscamento concluido com sucesso!";
+            result.message = "Desofuscamento concluído com sucesso!";
             result.txt = Desofuscador.decode(txt);
         } else {
             result.status = 442;
@@ -40,21 +39,22 @@ router.post('/', (req, res) => {
         if (err) {
             console.log(err);
             result.status = 422;
-            result.message = "Formato invalido";
+            result.message = "Formato inválido";
         } else {
             let file = req.file ? req.file : false;
             if(file) {
                 const path = await processFile(file);
                 if (path) {
-                    result.status = 200;
                     result.filePath = path;
-                    result.message = "Desofuscamento concluido com sucesso!";
+                    result.status = 200;
+                    // result.download(path, file.originalname);
+                    }
+                    result.message = "Desofuscamento concluído com sucesso!";
                 } else {
                     result.status = 500;
                     result.message = "Ocorreu um erro ao encontrar o arquivo!";
                 }
             }
-        }
         console.log(result);
         res.status(result.status).send(JSON.stringify(result));
     });
