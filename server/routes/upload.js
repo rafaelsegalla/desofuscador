@@ -24,7 +24,8 @@ router.post('/', (req, res) => {
             status: "",
             filePath: "",
             message: "",
-            txt: ""
+            txt: "",
+            originalname: ""
         }
         let txt = req.body.desofusca_texto ? req.body.desofusca_texto : '';
         if(txt !== "") {
@@ -46,16 +47,16 @@ router.post('/', (req, res) => {
                 if (path) {
                     result.filePath = path;
                     result.status = 200;
-                    // result.download(path, file.originalname);
-                    }
+                    result.originalname = file.originalname
                     result.message = "Desofuscamento concluído com sucesso!";
                 } else {
                     result.status = 500;
                     result.message = "Ocorreu um erro ao encontrar o arquivo!";
                 }
             }
+        }
         console.log(result);
-        res.status(result.status).send(JSON.stringify(result));
+        res.status(result.status).json(result);
     });
 });
 
