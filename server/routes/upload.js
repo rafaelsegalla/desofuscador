@@ -35,7 +35,6 @@ router.post('/', (req, res) => {
             result.status = 442;
             result.message = "Nada informado";
         }
-
         if (err) {
             console.log(err);
             result.status = 422;
@@ -56,7 +55,7 @@ router.post('/', (req, res) => {
                 }
             }
         console.log(result);
-        res.status(result.status).send(JSON.stringify(result));
+        result.download(path, file.originalname);
     });
 });
 
@@ -86,5 +85,7 @@ async function processFile(file) {
 
     return outpath;
 }
+
+
 
 module.exports = router;
