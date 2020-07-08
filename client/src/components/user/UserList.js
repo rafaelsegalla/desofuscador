@@ -119,6 +119,11 @@ class UserList extends Component {
     const handleConfirmEditUserCallback = this.state.getUserList;
 
     const handleEditUser = (event, rowData) => {
+      let editObj = {
+        idusuario: rowData.idusuario,
+        nome_proprio: rowData.nome_proprio,
+        usuario: rowData.usuario
+      }
       this.setState( {
         modal: {
           open: true,
@@ -126,7 +131,7 @@ class UserList extends Component {
           showActions: false,
           body: <UserForm
                   backButton={false}
-                  userObject={rowData} 
+                  userObject={editObj} 
                   isEdit={true} 
                   submitHandlerCallback={handleConfirmEditUserCallback} />
         },
@@ -148,8 +153,7 @@ class UserList extends Component {
           columns={[
             { title: 'ID', field: 'idusuario', type: 'numeric' },
             { title: 'Nome', field: 'nome_proprio' },
-            { title: 'Usuário', field: 'usuario' },
-            { title: 'Senha', field: 'senha' }
+            { title: 'Usuário', field: 'usuario' }
           ]}
           data={data}
           localization={{
