@@ -55,7 +55,7 @@ router.post('/', (req, res) => {
                 }
             }
         console.log(result);
-        result.download(path, file.originalname);
+        res.status(result.status).send(JSON.stringify(result));
     });
 });
 

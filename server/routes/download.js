@@ -1,12 +1,17 @@
 const router = require('express').Router();
-const Upload = require('upload');
-const output_files = require('../output_files')
+const fs = require('fs');
 
-var express = require('express');
-var app = express();
+router.get('/', async(req, res) => {
+    const filePath = req.query.filePath;
+    const originalName = req.query.originalName ? req.query.originalName : 'generated.txt';
 
-app.get('/download', function(req, res){
-    const file = `${__dirname}/output_files/file.originalname`;
-    res.download(file); // Set disposition and send it.
+    fs.access(filePath, error => {
+        if (!error) {
+            res.download(filePath, originalName);
+        } else {
+            res.status(400).send('Arquivo não existe!');
+        }
+    });
 });
 
+module.exports = router;
