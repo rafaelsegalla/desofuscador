@@ -7,15 +7,16 @@ import Fade from '@material-ui/core/Fade';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      overflow: 'auto'
     },
     paper: {
       backgroundColor: theme.palette.background.paper,
       padding: theme.spacing(2, 6, 4),
       fontFamily: "monospace",
       width: '50%',
+      margin: "auto",
+      marginTop: "15px",
+      marginBottom: "10px"
     },
     textarea: {
     width: '100%',
