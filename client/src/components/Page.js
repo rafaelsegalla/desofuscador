@@ -8,7 +8,6 @@ export default class Page extends React.Component {
             width: "100%",
             backgroundColor: "white",
             height: "30px",
-            // position: "fixed",
             bottom: "0",
             paddingTop: "20px",
             paddingBottom: "40px",

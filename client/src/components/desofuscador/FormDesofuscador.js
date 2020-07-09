@@ -126,7 +126,7 @@ function FormDesofuscador() {
                                 align="center">
                                 {error}
                             </Typography>
-                            <Box mt={"45px"}>
+                            <Box mt={"45px"} display="flex" alignItems="center" justifyContent="center">
                                 <Button 
                                     color="primary"
                                     variant="contained"
@@ -161,7 +161,7 @@ function FormDesofuscador() {
                         </Typography>
                         {
                             fileDownload ? 
-                            <Box mt={"45px"}>
+                            <Box mt={"45px"} display="flex" alignItems="center" justifyContent="center">
                             <Button 
                                 color="primary"
                                 variant="contained"
@@ -196,13 +196,6 @@ function FormDesofuscador() {
                     onSubmit={handleSubmit}
                     encType="multipart/form-data">
                     <FormGroup>
-                        {/*<Typography*/}
-                        {/*    color="primary"*/}
-                        {/*    variant="h2"*/}
-                        {/*    align="center">*/}
-                        {/*    Desofuscador*/}
-                        {/*</Typography>*/}
-                        {/*<Box mt={"45px"}/>*/}
                         <Typography
                             color="primary"
                             variant="h5">
