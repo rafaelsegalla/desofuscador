@@ -196,13 +196,13 @@ function FormDesofuscador() {
                     onSubmit={handleSubmit}
                     encType="multipart/form-data">
                     <FormGroup>
-                        <Typography
-                            color="primary"
-                            variant="h2"
-                            align="center">
-                            Desofucador
-                        </Typography>  
-                        <Box mt={"45px"}/>
+                        {/*<Typography*/}
+                        {/*    color="primary"*/}
+                        {/*    variant="h2"*/}
+                        {/*    align="center">*/}
+                        {/*    Desofuscador*/}
+                        {/*</Typography>*/}
+                        {/*<Box mt={"45px"}/>*/}
                         <Typography
                             color="primary"
                             variant="h5">
@@ -220,7 +220,7 @@ function FormDesofuscador() {
                         <Typography
                             color="primary"
                             variant="h5">
-                            Texto
+                            Inserir texto
                         </Typography>
                         
                         <TextareaAutosize 
