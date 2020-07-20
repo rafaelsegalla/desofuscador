@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import { Box } from '@material-ui/core';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import MuiAlert from '@material-ui/lab/Alert';
  
 export default class LoginForm extends React.Component {
  
@@ -10,6 +11,9 @@ export default class LoginForm extends React.Component {
             usuario: '',
             senha: ''
         },
+        showMessage: false,
+        messageText: 'Erro não mapeado D:',
+        messageSeverity: 'error'
     };
  
     handleChange = (event) => {
@@ -20,11 +24,36 @@ export default class LoginForm extends React.Component {
     }
  
     handleSubmit = () => {
-        // your submit logic
+        const base_url = process.env.REACT_APP_SERVER_URL;
+        fetch(`${base_url}login`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: this.state.user.usuario, password: this.state.user.senha })
+        })
+        .then(res => {
+            let state = this.state;
+            if (!res.ok) {
+                state.showMessage = true;
+                state.messageText = res.statusText;
+                state.messageSeverity = 'error';
+                this.setState(state);
+                throw Error(res.statusText);
+            }
+
+            state.showMessage = false;
+            this.setState(state);
+            return res.json();
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => console.log(error));
     }
  
     render() {
-        const { user } = this.state;
+        const { user, showMessage, messageText, messageSeverity } = this.state;
  
         return (
             <ValidatorForm
@@ -59,6 +88,7 @@ export default class LoginForm extends React.Component {
                     type="submit" 
                     variant="contained" 
                     fullWidth
+                    onClick={this.handleSubmit}
                     color="primary">
                     Entrar
                 </Button>
@@ -71,6 +101,15 @@ export default class LoginForm extends React.Component {
                     Criar uma conta
                 </Button>
             </Box>
+            {
+                showMessage ? (
+                <Box mt={3}>
+                    <MuiAlert elevation={6} variant="filled" severity={messageSeverity}>
+                        {messageText}
+                    </MuiAlert>
+                </Box>
+                ) : ''
+            }
         </ValidatorForm>
         );
     }

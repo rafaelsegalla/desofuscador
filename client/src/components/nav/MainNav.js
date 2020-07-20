@@ -6,6 +6,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
+import { logout } from '../../auth';
 
 import useStyles from '../../MainCss';
 
@@ -22,10 +23,7 @@ export default function MainNav() {
                         </Link>
                     </Typography>
                     <div style={{marginLeft: "auto"}}>
-                        <IconButton edge="end" color="inherit">
-                            <AccountCircle />
-                        </IconButton>
-                        <IconButton edge="end" color="inherit">
+                        <IconButton edge="end" color="inherit" onClick={logout}>
                             <ExitToAppIcon />
                         </IconButton>
                     </div>

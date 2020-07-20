@@ -21,6 +21,8 @@ import Alert from '@material-ui/lab/Alert';
 import MainModal from '../modal/MainModal';
 import UserForm from './UserForm';
 
+import { getToken } from '../../auth';
+
 class UserList extends Component {
 
   state = {
@@ -40,12 +42,17 @@ class UserList extends Component {
     data: this.props.data,
     selectedUser: {},
     getUserList: () => {
+      let token = getToken();
       let data = [];
       const base_url = process.env.REACT_APP_SERVER_URL;
       const get_url = base_url + "user/";
   
       const axios = require('axios');
-      axios.get(get_url)
+      axios.get(get_url, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+      })
       .then((res) => {
           if(res.status === 200) {
             data = res.data.data;
@@ -70,6 +77,7 @@ class UserList extends Component {
     const { modal, data, alert } = this.state;
 
     const handleConfirmUserDelete = (ev, rowData) => {
+      let token = getToken();
       let state = this.state;
       state.modal.open = false;
       this.setState(state);
@@ -80,7 +88,11 @@ class UserList extends Component {
       const axios = require('axios');
 
       state.alert.open = true;
-      axios.delete(delete_url)
+      axios.delete(delete_url, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+      })
       .then((res) => {
           if(res.status === 200) {
             state.alert.severity = 'success';

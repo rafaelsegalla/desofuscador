@@ -4,6 +4,7 @@ import { Box } from '@material-ui/core';
 import { ValidatorForm, TextValidator} from '../../../node_modules/react-material-ui-form-validator';
 import Alert from '@material-ui/lab/Alert';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { getToken } from '../../auth';
  
 export default class UserForm extends React.Component {
     state = {
@@ -50,7 +51,7 @@ export default class UserForm extends React.Component {
  
     handleSubmit = () => {
         const { user } = this.state;
-
+        let token = getToken();
         const axios = require('axios');
         const base_url = process.env.REACT_APP_SERVER_URL;
         let currentState = this.state;
@@ -58,7 +59,11 @@ export default class UserForm extends React.Component {
             // put logic
             const idUsuario = user.idusuario;
             const put_url = base_url + "user/" + idUsuario;
-            axios.put(put_url, user)
+            axios.put(put_url, user, {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            })
             .then((res) => {
                 if(res.status === 200) {
                     currentState.showResult = true;
@@ -78,7 +83,11 @@ export default class UserForm extends React.Component {
         } else {
             // post logic
             const post_url = base_url + "user/";
-            axios.post(post_url, user)
+            axios.post(post_url, user, {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            })
             .then((res) => {
                 if(res.status === 200) {
                     currentState.showResult = true;
