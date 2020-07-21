@@ -15,6 +15,6 @@ const sequelize = new Sequelize(
     }
 );
 
-console.log(sequelize);
+// console.log(sequelize);
 
 module.exports = sequelize;

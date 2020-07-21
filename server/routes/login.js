@@ -2,11 +2,11 @@ const router = require('express').Router();
 const {check, validationResult} = require('express-validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('server/models/user.js');
+const User = require('../models/user');
 
 require('dotenv').config();
 
-router.port('/', [
+router.post('/', [
         check('usuario', 'Informe seu usuário')
             .trim()
             .escape()

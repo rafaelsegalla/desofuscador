@@ -7,6 +7,7 @@ require('dotenv').config();
 const taskRouter = require('./routes/user');
 const uploadRouter = require('./routes/upload');
 const downloadRouter = require('./routes/download');
+const loginRouter = require('./routes/login' );
 const auth = require('./auth');
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(cors());
 app.use(`/user`, auth, taskRouter);
 app.use(`/upload`, auth, uploadRouter);
 app.use(`/download`, auth, downloadRouter);
+app.use(`/login`, auth, loginRouter);
 
 //cria o diretorio OUTDIR se ele não existir
 fs.access(process.env.OUTDIR, fs.constants.F_OK, (err) => {
