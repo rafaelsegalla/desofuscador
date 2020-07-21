@@ -63,6 +63,7 @@ function FormDesofuscador() {
         const url = base_url + 'upload';
         let req = new XMLHttpRequest();
         let token = getToken();
+        req.open('POST', url);
         req.setRequestHeader("authorization", `Bearer ${token}`);
         req.onreadystatechange = () => {
             if (req.readyState == XMLHttpRequest.DONE) {
@@ -91,8 +92,6 @@ function FormDesofuscador() {
                 }
             }
         };
-
-        req.open('POST', url);
         req.send(formData);
     };
 

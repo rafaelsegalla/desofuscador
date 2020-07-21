@@ -20,16 +20,26 @@ router.post('/', [
         if (errors.isEmpty()) {
             User.findOne({
                 where: {
-                    email: req.body.username
+                    usuario: req.body.usuario
                 }
             }).then(user => {
+                if (!user) {
+                    return res.status(404).json({
+                        error: [{
+                            value: '',
+                            msg: 'Usuário não encontrado!',
+                        }]
+                    }) 
+                }
                 bcrypt.compare(req.body.senha, user.senha)
                     .then(result => {
                     if (result) {
                         const token = jwt.sign({
-                            name: user.nome_proprio,
-                            email: user.usuario,
+                            nome_proprio: user.nome_proprio,
+                            usuario: user.usuario,
                         }, process.env.SECRET);
+
+                        return res.json({token: token})
                     } else {
                         return res.status(404).json({
                             error: [{
@@ -40,6 +50,7 @@ router.post('/', [
                     }
                 })
             }).catch(error => {
+                console.log(error)
                 return res.status(500).json({
                     error: [{
                         value: '',

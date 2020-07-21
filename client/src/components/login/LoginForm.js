@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import { Box } from '@material-ui/core';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import MuiAlert from '@material-ui/lab/Alert';
+import { login } from '../../auth';
  
 export default class LoginForm extends React.Component {
  
@@ -30,7 +31,7 @@ export default class LoginForm extends React.Component {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username: this.state.user.usuario, password: this.state.user.senha })
+            body: JSON.stringify({ usuario: this.state.user.usuario, senha: this.state.user.senha })
         })
         .then(res => {
             let state = this.state;
@@ -38,16 +39,24 @@ export default class LoginForm extends React.Component {
                 state.showMessage = true;
                 state.messageText = res.statusText;
                 state.messageSeverity = 'error';
-                this.setState(state);
-                throw Error(res.statusText);
+            } else {
+                state.messageSeverity = 'success';
+                state.showMessage = false;
             }
-
-            state.showMessage = false;
             this.setState(state);
             return res.json();
         })
         .then(data => {
-            console.log(data);
+            if (typeof data.error !== 'undefined') {
+                let state = this.state;
+                state.showMessage = true;
+                state.messageText = data.error[0].msg;
+                this.setState(state);
+                return false;
+            }
+            login(data.token);
+            window.location = '/app';
+            
         })
         .catch(error => console.log(error));
     }
@@ -88,7 +97,6 @@ export default class LoginForm extends React.Component {
                     type="submit" 
                     variant="contained" 
                     fullWidth
-                    onClick={this.handleSubmit}
                     color="primary">
                     Entrar
                 </Button>

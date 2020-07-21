@@ -5,7 +5,7 @@ import { ValidatorForm, TextValidator} from '../../../node_modules/react-materia
 import Alert from '@material-ui/lab/Alert';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { getToken } from '../../auth';
- 
+
 export default class UserForm extends React.Component {
     state = {
         user: (this.props.userObject ? {

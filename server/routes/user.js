@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const {check, validationResult} = require('express-validator');
 const User = require('../models/user');
+const bcrypt = require('bcrypt');
+const auth = require('../auth');
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
     User.findAll().then(users => {
         if (users.length > 0) {
             return res.json({
@@ -19,7 +21,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/:idusuario', [
+router.get('/:idusuario', auth, [
     check('idusuario', 'id deve ser um número inteiro.')
         .trim()
         .escape()
@@ -70,29 +72,34 @@ router.post('/', [
     (req, res) => {
     const errors = validationResult(req);
     if (errors.isEmpty()) {
-        User.create({
-            nome_proprio: req.body.nome_proprio,
-            usuario: req.body.usuario,
-            senha: req.body.senha
-        }).then(user => {
-            return res.json({
-                data: [user]
-            });
-        }).catch(error => {
-            console.log(error);
-            return res.status(500).json({
-                error: [{
-                    value: ' ',
-                    msg: 'Falha ao comunicar com o SGBD.'
-                }]
+        let senha = req.body.senha;
+        bcrypt.hash(senha, 10, (err, hash) => {
+            senha = hash;
+            User.create({
+                nome_proprio: req.body.nome_proprio,
+                usuario: req.body.usuario,
+                senha: senha
+            }).then(user => {
+                return res.json({
+                    data: [user]
+                });
+            }).catch(error => {
+                console.log(error);
+                return res.status(500).json({
+                    error: [{
+                        value: ' ',
+                        msg: 'Falha ao comunicar com o SGBD.'
+                    }]
+                });
             });
         });
+        
     } else {
         return res.status(422).json(errors);
     }
 });
 
-router.put('/:idusuario', [
+router.put('/:idusuario', auth, [
     check('nome_proprio', 'Nome é campo obrigatório.')
         .trim()
         .escape()
@@ -139,7 +146,7 @@ router.put('/:idusuario', [
     }
 });
 
-router.delete('/:idusuario', [
+router.delete('/:idusuario', auth, [
     check('idusuario', 'id deve ser um número inteiro.')
         .trim()
         .escape()

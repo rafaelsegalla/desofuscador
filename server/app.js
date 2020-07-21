@@ -18,7 +18,7 @@ const port = process.env.PORTSERVER;
 
 app.use(express.json());
 app.use(cors());
-app.use(`/user`, auth, taskRouter);
+app.use(`/user`, taskRouter);
 app.use(`/upload`, auth, uploadRouter);
 app.use(`/download`, downloadRouter);
 app.use(`/login`, loginRouter);
