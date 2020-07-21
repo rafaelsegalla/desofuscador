@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import { getToken } from '../../auth';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -60,8 +61,9 @@ function FormDesofuscador() {
         formData.append("desofusca_texto", desofusca_texto.value);
 
         const url = base_url + 'upload';
-        const req = new XMLHttpRequest();
-
+        let req = new XMLHttpRequest();
+        let token = getToken();
+        req.setRequestHeader("authorization", `Bearer ${token}`);
         req.onreadystatechange = () => {
             if (req.readyState == XMLHttpRequest.DONE) {
                 if (req.status === 200) {
