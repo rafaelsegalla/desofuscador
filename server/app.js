@@ -20,8 +20,8 @@ app.use(express.json());
 app.use(cors());
 app.use(`/user`, auth, taskRouter);
 app.use(`/upload`, auth, uploadRouter);
-app.use(`/download`, auth, downloadRouter);
-app.use(`/login`, auth, loginRouter);
+app.use(`/download`, downloadRouter);
+app.use(`/login`, loginRouter);
 
 //cria o diretorio OUTDIR se ele não existir
 fs.access(process.env.OUTDIR, fs.constants.F_OK, (err) => {
