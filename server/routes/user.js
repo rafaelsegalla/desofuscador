@@ -60,7 +60,14 @@ router.post('/', [
         .trim()
         .escape()
         .notEmpty()
-], (req, res) => {
+],
+    [
+        check('senha', 'Senha é campo obrigatório')
+            .trim()
+            .escape()
+            .notEmpty()
+    ],
+    (req, res) => {
     const errors = validationResult(req);
     if (errors.isEmpty()) {
         User.create({
